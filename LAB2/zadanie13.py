@@ -1,8 +1,9 @@
 import numpy as np
-from sklearn.model_selection import KFold
+from sklearn.model_selection import StratifiedKFold
 from sklearn.naive_bayes import GaussianNB
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+
 #pobranie danych z wcześniej zapisanego pliku 
 dataset = np.genfromtxt("zadanie11.csv", delimiter=",")
 X = dataset[:, :-1]
@@ -13,15 +14,15 @@ y = dataset[:, -1].astype(int)
 X_train, X_test, y_train, y_test = train_test_split(
 
     X, y,
-    test_size = 0.7,
-    random_state=1234,
+    test_size = 0.2,
+    random_state=1234
 )
 
+#Walidacja krzyzowa
+kf = StratifiedKFold(n_splits=5, shuffle = True, random_state=1234)
+scores = [] # tablica do ktorej beda zapisywane dane
 
-kf = KFold(n_splits=5, shuffle = True, random_state=1234)
-scores = []
-
-for train_index, test_index in kf.split(X):
+for train_index, test_index in kf.split(X,y):
     X_train, X_test = X[train_index], X[test_index]
     y_train, y_test = y[train_index], y[test_index]
     clf = GaussianNB()
@@ -30,7 +31,6 @@ for train_index, test_index in kf.split(X):
     scores.append(accuracy_score(y_test, predict))
 
 #Wyniki walidacji krzyzowej
-
 mean_score = np.mean(scores)
 std_score = np.std(scores)
-print("Accuracy score: %.3f (%.3f)" % (mean_score, std_score))
+print("Wartość srednia: %.3f \nOdchylenie standardowe: %.3f" % (mean_score, std_score))
