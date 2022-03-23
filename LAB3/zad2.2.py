@@ -12,6 +12,7 @@ from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.utils.multiclass import unique_labels
+from sklearn.neighbors import KNeighborsClassifier
 
 
 
@@ -51,21 +52,11 @@ class NClassifier(BaseEstimator, ClassifierMixin):
                 y = pow((self.X_[j,1]-X[i,1]), 2)
                 xd = np.sqrt(x+y) 
                 temp.append(xd)
-            print(temp, "\n\n")
             mind = np.min(temp)
-            print(mind)
             ix = temp.index(mind)
             self.y_predict.append(self.y_[ix])
-        print(self.y_predict)
         return self.y_predict
-
-
-
-
-            
-
-
-                    
+           
 X, y = make_classification(
     n_samples = 400,#liczba generowanych wzorców
     n_features = 2,#liczba atrybutów
@@ -82,13 +73,20 @@ X_train, X_test, y_train, y_test = train_test_split(
     test_size = 0.2,
     random_state = 2
 )
-
+#własny klasyfikator
 clf = NClassifier()
 clf.fit(X_train, y_train)
 predict = clf.predict(X_test)
-
 score = accuracy_score(y_test, predict)
 
-print(f"Accuracy Score: {score.round(2)}")
+#Ten gorszy bo obcy klasyfikator
+clf2 = KNeighborsClassifier(n_neighbors=1, algorithm='brute')
+clf2.fit(X_train, y_train)
+predict2 = clf2.predict(X_test)
+score2 = accuracy_score(y_test, predict2)
+
+print(f"Accuracy Score for own estimator: {score.round(2)}\n")
+print(f"Accuracy Score KN: {score2.round(2)}\n")
+
 
 
