@@ -1,4 +1,3 @@
-from os import SCHED_OTHER
 from tabnanny import check
 from sklearn.base import BaseEstimator, ClassifierMixin
 import numpy as np
@@ -38,8 +37,8 @@ class RandomClassifier(BaseEstimator, ClassifierMixin):
             if y[i]>0:
                 one += 1
         self.p_one = one/len(y) # proporcja między klasami
-        #print(self.p_one)
-        #print(1-self.p_one)
+        print(self.p_one)
+        print(1-self.p_one)
 
         
         return self
@@ -72,16 +71,12 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state = 2
 )
 
-score = []
-for i in range(0, 1000):
-    clf = RandomClassifier()
-    clf.fit(X_train, y_train)
-    predict = clf.predict(X_test)
+clf = RandomClassifier()
+clf.fit(X_train, y_train)
+predict = clf.predict(X_test)
 
-    score.append(accuracy_score(y_test, predict))
+score = accuracy_score(y_test, predict)
 
-#print(f"Accuracy Score: {score.round(2)}")
-x  = np.mean(score)
-print(x)
+print(f"Accuracy Score: {score.round(2)}")
 
 
