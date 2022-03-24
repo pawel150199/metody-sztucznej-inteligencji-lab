@@ -11,6 +11,7 @@ from numpy.random import MT19937
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from numpy.random import RandomState
 
 
 
@@ -19,8 +20,7 @@ class RandomClassifier(BaseEstimator, ClassifierMixin):
 
     def __init__(self, random_state=1410):
         """Inicjalizacja generatora"""
-        self.random_state = random_state
-        np.random.seed(self.random_state)
+        self.random_state = RandomState()
 
     def fit(self, X, y):
         """Uczenie się"""
