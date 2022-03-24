@@ -15,7 +15,7 @@ clfs = {
     'kNN': NClassifier(),
 }
 
-data = [datasets.make_moons(random_state=42), datasets.make_circles(random_state=42), datasets.make_blobs(random_state=42)]
+data = [datasets.make_moons(), datasets.make_circles(), datasets.make_blobs(random_state=42)]
 n_data = len(data)
 n_splits = 2
 n_repeats = 5
@@ -36,7 +36,6 @@ for i in range(0,len(data)):
 #zapisuje wartości srednie i odchylenie standardowe
 mean_scores = np.mean(scores, axis=2).T
 std_scores = np.std(scores, axis=2).T
-print(mean_scores)
 
 
 #zapisanie wyników do tabel
@@ -52,10 +51,24 @@ for i in range(0, n_data):
 for i in range(0, len(data_names)):
     m_scores.add_row([data_names[i], rc[i], knn[i]])
 
-s_scores = table()
-
-print("Mean Scores: \n\n")
+print("\n\nMean Scores: \n\n")
 print(m_scores)
+
+#zapisuwanie wartosci odchylenia  standardowego
+s_scores = table()
+s_scores.field_names = ('nazwa zbioru', 'Random Classifier', 'k Neighbours Classifier' )
+rc_s = []
+knn_s = []
+for i in range(0, n_data):
+    rc_s.append(round(std_scores[i,0],3))
+    knn_s.append(round(std_scores[i,1],3))   
+
+for i in range(0, len(data_names)):
+    s_scores.add_row([data_names[i], rc_s[i], knn_s[i]])
+
+
+print("\n\nStandard deviation: \n\n")
+print(s_scores)
     
 
 
