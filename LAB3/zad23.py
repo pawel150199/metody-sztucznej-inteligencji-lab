@@ -11,18 +11,24 @@ from prettytable import PrettyTable as table
 
 
 clfs = {
-    'RC': RandomClassifier(),
-    'kNN': NClassifier(),
+    "RC": RandomClassifier(),
+    "kNN": NClassifier(),
 }
 
-data = [datasets.make_moons(), datasets.make_circles(), datasets.make_blobs(random_state=42)]
+data = [
+    datasets.make_moons(),
+    datasets.make_circles(),
+    datasets.make_blobs(random_state=42),
+]
 n_data = len(data)
 n_splits = 2
 n_repeats = 5
-rskf = RepeatedStratifiedKFold(n_splits=n_splits, n_repeats=n_repeats, random_state=1234)
-scores = np.zeros((len(clfs), n_data, n_splits*n_repeats))
+rskf = RepeatedStratifiedKFold(
+    n_splits=n_splits, n_repeats=n_repeats, random_state=1234
+)
+scores = np.zeros((len(clfs), n_data, n_splits * n_repeats))
 
-for i in range(0,len(data)):
+for i in range(0, len(data)):
     d = data[i]
     X = d[0]
     y = d[1]
@@ -33,20 +39,20 @@ for i in range(0,len(data)):
             y_pred = clf.predict(X[test])
             scores[clf_id, i, fold_id] = accuracy_score(y[test], y_pred)
 
-#zapisuje wartości srednie i odchylenie standardowe
+# zapisuje wartości srednie i odchylenie standardowe
 mean_scores = np.mean(scores, axis=2).T
 std_scores = np.std(scores, axis=2).T
 
 
-#zapisanie wyników do tabel
-data_names = ['moons', 'circles', 'blob']
+# zapisanie wyników do tabel
+data_names = ["moons", "circles", "blob"]
 m_scores = table()
-m_scores.field_names = ('nazwa zbioru', 'Random Classifier', 'k Neighbours Classifier' )
+m_scores.field_names = ("nazwa zbioru", "Random Classifier", "k Neighbours Classifier")
 rc = []
 knn = []
 for i in range(0, n_data):
-    rc.append(round(mean_scores[i,0],3))
-    knn.append(round(mean_scores[i,1],3))   
+    rc.append(round(mean_scores[i, 0], 3))
+    knn.append(round(mean_scores[i, 1], 3))
 
 for i in range(0, len(data_names)):
     m_scores.add_row([data_names[i], rc[i], knn[i]])
@@ -54,14 +60,14 @@ for i in range(0, len(data_names)):
 print("\n\nMean Scores: \n\n")
 print(m_scores)
 
-#zapisuwanie wartosci odchylenia  standardowego
+# zapisuwanie wartosci odchylenia  standardowego
 s_scores = table()
-s_scores.field_names = ('nazwa zbioru', 'Random Classifier', 'k Neighbours Classifier' )
+s_scores.field_names = ("nazwa zbioru", "Random Classifier", "k Neighbours Classifier")
 rc_s = []
 knn_s = []
 for i in range(0, n_data):
-    rc_s.append(round(std_scores[i,0],3))
-    knn_s.append(round(std_scores[i,1],3))   
+    rc_s.append(round(std_scores[i, 0], 3))
+    knn_s.append(round(std_scores[i, 1], 3))
 
 for i in range(0, len(data_names)):
     s_scores.add_row([data_names[i], rc_s[i], knn_s[i]])
@@ -69,9 +75,6 @@ for i in range(0, len(data_names)):
 
 print("\n\nStandard deviation: \n\n")
 print(s_scores)
-    
-
-
 
 
 """
