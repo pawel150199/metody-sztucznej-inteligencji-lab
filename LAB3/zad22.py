@@ -62,7 +62,7 @@ if __name__ == "__main__":
         n_repeated=0,  # brak powtórzeń
         n_redundant=0,  # brak cech zbędnych
         # flip_y = 0.08,#szum etykiet 8% ogółu wzorca
-        random_state=1500,
+        #random_state=1500,
         n_informative=2
         # weights=None
     )
