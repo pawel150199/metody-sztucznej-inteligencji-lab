@@ -17,7 +17,7 @@ from numpy.random import RandomState
 class RandomClassifier(BaseEstimator, ClassifierMixin):
     """An example of classifier"""
 
-    def __init__(self, random_state=1410):
+    def __init__(self, random_state=None):
         """Inicjalizacja generatora"""
         self.random_state = RandomState()
 
@@ -31,29 +31,14 @@ class RandomClassifier(BaseEstimator, ClassifierMixin):
         self.X_, self.y_ = X, y
         # liczba klas problemu
         self.n_features = len(np.unique(y))
-        numb = []  # liczba kazdej z klas tytaj okreslamy proporcje
-        for i in range(0, len(np.unique(y))):
-            pointer = 0
-            for j in range(0, len(y)):
-                if i == y[j]:
-                    pointer += 1
-            numb.append(pointer)
-        self.p = []  # tablica prawdopodobienstw
-        # wypełniam tablice prawdopodobieństw
-        for i in numb:
-            self.p.append((i / len(y)))
-
         return self
 
     def predict(self, X):
         """Dokonujemy predykcji"""
         check_is_fitted(self)  # sprawdzam czy jest wywołana metoda fit
         X = check_array(X)
-        y_predict = []
         # zwracanie losowej etykiety
-        for i in range(0, len(X)):
-            ran_y = np.random.choice(self.classes_, 1, p=self.p)
-            y_predict.append(ran_y)
+        y_predict = self.random_state.choice(self.n_features, len(X))
         return np.array(y_predict)
 
 
