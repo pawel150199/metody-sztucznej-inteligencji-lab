@@ -54,7 +54,7 @@ for i in range(0, n_data):
 
 # zapisuwanie wartosci odchylenia  standardowego
 s_scores = table()
-s_scores.field_names = ("nazwa zbioru", "mean  RC", "std RC", "mean NC", "std NC")
+s_scores.field_names = ("nazwa zbioru", "Random Classifier",  "kNN Clasifier")
 rc_s = []
 knn_s = []
 for i in range(0, n_data):
@@ -62,7 +62,7 @@ for i in range(0, n_data):
     knn_s.append(round(std_scores[i, 1], 3))
 
 for i in range(0, len(data_names)):
-    s_scores.add_row([data_names[i], rc[i], rc_s[i], knn[i], knn_s[i]])
+    s_scores.add_row([data_names[i], str(f"{rc[i]}\n({rc_s[i]})\n\n"), str(f"{knn[i]}\n({knn_s[i]})\n\n")])
 
 
 print("\n\nWyniki doświadczenia: \n\n")
