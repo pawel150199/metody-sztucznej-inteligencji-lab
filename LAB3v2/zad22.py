@@ -40,7 +40,7 @@ class NClassifier(BaseEstimator, ClassifierMixin):
         # licze odleglosci
         xd = cdist(self.X_, X, metric="euclidean")
         # zwracam ideksy min
-        index = np.argsort(xd, axis=0)[:5]
+        index = np.argsort(xd, axis=0)[:self.k]
         xdd = mode(index, axis=0)[0]
         return self.y_[xdd[0]].reshape(X.shape[0])
 
