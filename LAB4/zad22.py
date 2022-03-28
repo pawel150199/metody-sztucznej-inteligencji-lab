@@ -8,6 +8,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.utils.multiclass import unique_labels
 from sklearn.neighbors import KNeighborsClassifier
 from scipy.spatial.distance import cdist
+from scipy.stats import mode
 
 
 class NClassifier(BaseEstimator, ClassifierMixin):
@@ -37,8 +38,11 @@ class NClassifier(BaseEstimator, ClassifierMixin):
         # licze odleglosci
         xd = cdist(self.X_, X, metric="euclidean")
         # zwracam ideksy min
-        index = np.argmin(xd, axis=0)
-        return self.y_[index]
+        index = np.argsort(xd, axis=1)
+        mod = mode(index, axis=0)
+        print(mod)
+
+        return self.y_[mod[0]]
 
 
 if __name__ == "__main__":
