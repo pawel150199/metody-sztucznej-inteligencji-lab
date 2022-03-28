@@ -1,3 +1,4 @@
+from matplotlib.pyplot import axes
 import numpy as np
 import random
 from sklearn.base import BaseEstimator, ClassifierMixin
@@ -9,6 +10,7 @@ from sklearn.utils.multiclass import unique_labels
 from sklearn.neighbors import KNeighborsClassifier
 from scipy.spatial.distance import cdist
 from scipy.stats import mode
+import statistics
 
 
 class NClassifier(BaseEstimator, ClassifierMixin):
@@ -38,11 +40,9 @@ class NClassifier(BaseEstimator, ClassifierMixin):
         # licze odleglosci
         xd = cdist(self.X_, X, metric="euclidean")
         # zwracam ideksy min
-        index = np.argsort(xd, axis=1)
-        mod = mode(index, axis=0)
-        print(mod)
-
-        return self.y_[mod[0]]
+        index = np.argsort(xd, axis=0)[:5]
+        xdd = mode(index, axis=0)[0]
+        return self.y_[xdd[0]].reshape(X.shape[0])
 
 
 if __name__ == "__main__":
