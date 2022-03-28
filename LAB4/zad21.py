@@ -33,12 +33,16 @@ class RandomClassifier(BaseEstimator, ClassifierMixin):
         self.p = []
         for i in self.classes_:
             tmp = 0
-            for j in y:
+            for j in self.y_:
                 if i == j:
                     tmp += 1
-            self.p.append(tmp)
-        ix = self.p.index(max(self.p)) 
-        self.max = self.y_[ix]    
+            self.p.append(tmp/len(y))
+        ix = self.p.index(max(self.p))
+        print(self.classes_) 
+        print(self.p)
+        print(ix)
+        self.max = ix
+        print(self.max)   
         return self
 
     def predict(self, X):
