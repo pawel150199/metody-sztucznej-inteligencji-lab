@@ -13,9 +13,9 @@ from scipy.spatial.distance import cdist
 class NClassifier(BaseEstimator, ClassifierMixin):
     """An example of classifier closest neighbour"""
 
-    def __init__(self, demo_param="demo"):
+    def __init__(self, k = None):
         """Inicjalizacja generatora"""
-        self.demo_param = demo_param
+        self.k = k
 
     def fit(self, X, y):
         """Uczenie się"""

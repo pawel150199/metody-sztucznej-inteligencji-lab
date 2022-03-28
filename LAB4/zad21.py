@@ -30,27 +30,19 @@ class RandomClassifier(BaseEstimator, ClassifierMixin):
         self.X_, self.y_ = X, y
         # liczba klas problemu
         self.n_features = len(np.unique(y))
-        self.p = []
-        for i in self.classes_:
-            tmp = 0
-            for j in self.y_:
-                if i == j:
-                    tmp += 1
-            self.p.append(tmp/len(y))
-        ix = self.p.index(max(self.p))
-        print(self.classes_) 
-        print(self.p)
-        print(ix)
-        self.max = ix
-        print(self.max)   
+        unique, counts = np.unique(y, return_counts=True)
+        max = np.max(counts)
+        ix = list(counts).index(max)
+        self.y_p = list(unique)[ix]
         return self
+        
 
     def predict(self, X):
         """Dokonujemy predykcji"""
         check_is_fitted(self)  # sprawdzam czy jest wywołana metoda fit
         X = check_array(X)
 
-        y_predict = [self.max for i in range(0, len(X))]
+        y_predict = [self.y_p for i in range(0, len(X))]
         return y_predict
 
 
