@@ -40,7 +40,8 @@ rskf = RepeatedStratifiedKFold(
     random_state=42,
 )
 scores = np.zeros((len(clfs), n_splits*n_repeats))
-print(f"X shape: {X.shape}")
+print(f"X shape: {X.shape}")#kształt przed zmniejszeniem danych
+
 """
 for fold_id, (train, test) in enumerate(rskf.split(X, y)):
     for clf_id, clf_name in enumerate(clfs):
@@ -61,11 +62,13 @@ for clf_id, clf_name in enumerate(clfs):
 
 print("\n####################################\n")
 """
+#zmniejszenie ilości danych
 pca = PCA(svd_solver='full')
 pca.fit(X)
 accumulated_sum = np.cumsum(pca.explained_variance_ratio_)
 attributed_mask = accumulated_sum < .8
 X = X[:, attributed_mask]
+
 scoress = np.zeros((len(clfs), n_splits*n_repeats))
 for fold_id, (train, test) in enumerate(rskf.split(X, y)):
     for clf_id, clf_name in enumerate(clfs):
@@ -84,4 +87,4 @@ std = np.std(scoress, axis=1)
 for clf_id, clf_name in enumerate(clfs):
     print("%s: %.3f (%.2f)" % (clf_name, mean[clf_id], std[clf_id]))
 
-print(f"X shape po redukcji: {X.shape}")
+print(f"X shape po redukcji: {X.shape}")#kszttałt po redukcji danych

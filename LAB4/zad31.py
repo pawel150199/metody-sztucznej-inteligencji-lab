@@ -24,15 +24,15 @@ for i in range(X.shape[0]):
     for j in range(len(rand)):
         X[i, j] = X[i, j] * rand[j]
 
-n_splits = 2
-n_repeats = 5
+n_splits = 2#ilość foldów
+n_repeats = 5#powtórzenia
 
 rskf = RepeatedStratifiedKFold(
     n_splits=n_splits,
     n_repeats=n_repeats,
     random_state=42,
 )
-scores = np.zeros((len(clfs), n_splits*n_repeats))
+scores = np.zeros((len(clfs), n_splits*n_repeats))#tablica na wyniki
 
 for fold_id, (train, test) in enumerate(rskf.split(X, y)):
     for clf_id, clf_name in enumerate(clfs):

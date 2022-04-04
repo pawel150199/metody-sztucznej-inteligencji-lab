@@ -35,7 +35,8 @@ rskf = RepeatedStratifiedKFold(
     random_state=42,
 )
 
-print(f"X shape: {X.shape}")
+print(f"X shape: {X.shape}")#kształt oryginalny
+
 """
 scores = np.zeros((len(clfs), n_splits*n_repeats))
 
@@ -55,7 +56,9 @@ for clf_id, clf_name in enumerate(clfs):
 print("\n############################\n")
 
 """
+#selekcja danych
 X = SelectKBest(k=4).fit_transform(X,y)
+
 scoress = np.zeros((len(clfs), n_splits*n_repeats))
 for fold_id, (train, test) in enumerate(rskf.split(X, y)):
     for clf_id, clf_name in enumerate(clfs):
@@ -70,4 +73,4 @@ std = np.std(scoress, axis=1)
 for clf_id, clf_name in enumerate(clfs):
     print("%s: %.3f (%.2f)" % (clf_name, mean[clf_id], std[clf_id]))
 
-print(f"X shape po redukcji: {X.shape}")
+print(f"X shape po redukcji: {X.shape}")#kształt po redukcji

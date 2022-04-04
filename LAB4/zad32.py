@@ -28,11 +28,14 @@ for i in range(X.shape[0]):
 n_splits = 2
 n_repeats = 5
 
+#walidacja krzyzowa
 rskf = RepeatedStratifiedKFold(
     n_splits=n_splits,
     n_repeats=n_repeats,
     random_state=42,
 )
+
+#sprawdzam jak wygląda to bez normalizacji
 """
 scores = np.zeros((len(clfs), n_splits*n_repeats))
 
@@ -51,12 +54,14 @@ for clf_id, clf_name in enumerate(clfs):
 
 print("\n###########################\n")
 """
-scoress = np.zeros((len(clfs), n_splits*n_repeats))
+
+#z normalizacją
+scoress = np.zeros((len(clfs), n_splits*n_repeats))#macierz na wyniki
 for fold_id, (train, test) in enumerate(rskf.split(X, y)):
     for clf_id, clf_name in enumerate(clfs):
         clf = clfs[clf_name]
-        scaler = StandardScaler()
-        scaler.fit(X[train])
+        scaler = StandardScaler()#inicjalizacja 
+        scaler.fit(X[train])#skalowanie
         X_test = scaler.transform(X[test])
         X_train = scaler.transform(X[train])
         clf.fit(X_train, y[train])
