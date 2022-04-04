@@ -33,6 +33,7 @@ rskf = RepeatedStratifiedKFold(
     n_repeats=n_repeats,
     random_state=42,
 )
+"""
 scores = np.zeros((len(clfs), n_splits*n_repeats))
 
 for fold_id, (train, test) in enumerate(rskf.split(X, y)):
@@ -49,6 +50,7 @@ for clf_id, clf_name in enumerate(clfs):
     print("%s: %.3f (%.2f)" % (clf_name, mean[clf_id], std[clf_id]))
 
 print("\n###########################\n")
+"""
 scoress = np.zeros((len(clfs), n_splits*n_repeats))
 for fold_id, (train, test) in enumerate(rskf.split(X, y)):
     for clf_id, clf_name in enumerate(clfs):
