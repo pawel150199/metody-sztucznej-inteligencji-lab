@@ -22,12 +22,12 @@ clfs = {
     'CART': DecisionTreeClassifier(random_state=1234),
 }
 
-mean = np.mean(scores, axis=1)
+mean = np.mean(scores, axis=1).T
 print(mean)
 
 #Rangi
 ranks = []
-for ms in mean:
+for ms in mean.T:
     ranks.append(rankdata(ms).tolist())
 ranks = np.array(ranks)
 print("")
