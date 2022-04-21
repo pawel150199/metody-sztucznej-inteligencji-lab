@@ -8,7 +8,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from scipy.stats import ttest_rel
 from tabulate import tabulate
-from scipy.stats import ranksums
+
 
 dataset = 'australian'
 dataset = np.genfromtxt("%s.csv" % (dataset), delimiter=",")
@@ -35,7 +35,7 @@ for fold_id, (train, test) in enumerate(rskf.split(X,y)):
         y_pred = clf.predict(X[test])
         scores[clf_id, fold_id] = accuracy_score(y[test], y_pred)
 
-mean = np.std(scores, axis=1)
+mean = np.mean(scores, axis=1)
 std = np.std(scores, axis=1)
 
 for clf_id, clf_name in enumerate(clfs):
@@ -50,7 +50,7 @@ p_value = np.zeros((len(clfs), len(clfs)))
 
 for i in range(len(clfs)):
     for j in range(len(clfs)):
-        t_statistic[i, j], p_value[i, j] = ranksums(scores[i], scores[j])
+        t_statistic[i, j], p_value[i, j] = ttest_rel(scores[i], scores[j])
 
 headers = list(clfs.keys())
 names_column = np.expand_dims(np.array(list(clfs.keys())), axis=1)

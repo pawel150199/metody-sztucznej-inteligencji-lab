@@ -56,7 +56,7 @@ ranks = np.array(ranks)
 
 #uśrednione Rangi
 mean_ranks = np.mean(ranks, axis=0)
-#print("\nMean ranks:\n", mean_ranks)
+print("\nMean ranks:\n", mean_ranks)
 
 
 alfa = .05
