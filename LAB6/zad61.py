@@ -1,4 +1,3 @@
-from django.template import base
 import numpy as np
 from sklearn.ensemble import BaseEnsemble
 import random

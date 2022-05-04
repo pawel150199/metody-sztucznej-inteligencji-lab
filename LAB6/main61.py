@@ -5,12 +5,13 @@ from zad61 import BaggingClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import RepeatedStratifiedKFold
-
+from zad62 import BaggingClassifier2
 datasets = ['australian']
 
 clfs = {
     'Bagging': BaggingClassifier(random_state=1234, n_estimators=5),
     'CART': DecisionTreeClassifier(random_state=1234),
+    "Bagging v2": BaggingClassifier2(random_state=1234, n_estimators=5, hard_voting=True, scales=False)
 }
 
 n_repeat = 5
