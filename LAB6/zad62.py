@@ -35,19 +35,18 @@ class BaggingClassifier2(BaseEnsemble, ClassifierMixin):
         self.classes_ = np.unique(y)
         #Zapis liczby atrybutów
         self.n_features = X.shape[1]
+        self.weights = []
         if self.scales == True:
             n_split = 5
             n_repeat = 10
-            rskf = RepeatedStratifiedKFold(n_splits=n_split, n_repeats=n_repeat, random_state=1234)
-            scores  = np.zeros((self.n_estimators, n_split*n*n_repeat))
+            scores  = np.zeros((self.n_estimators, n_split*n_repeat))
             for i in range(self.n_estimators):
-                for fold_id, (train, test) in enumerate(rskf.split(X,y)):
-                    clf = clone(self.base_estimator)
-                    clf.fit(X[train], y[train])
-                    y_pred = clf.predict(X[test])
-                    scores[i, fold_id] = accuracy_score(y[test], y_pred)
-                    mean = np.mean(scores, axis=1)
-                    self.ranks = rankdata(mean, method='min')
+                clf = clone(self.base_estimator)
+                clf.fit(X, y)
+                y_pred = clf.predict(X)
+                scores[i] = accuracy_score(y, y_pred)
+            self.weights = scores*y_pred
+                    
 
         #macierz na wyniki
         self.ensemble_ = []
@@ -56,10 +55,8 @@ class BaggingClassifier2(BaseEnsemble, ClassifierMixin):
             self.X_ = []
             self.y_ = []
             for j in range(0, self.n_features):
-                self.temp = random.randint(0, X.shape[0]-1)
-                self.X_.append(X[self.temp])
-                self.y_.append(y[self.temp])
-            self.ensemble_.append(clone(self.base_estimator).fit(self.X_, self.y_))
+                self.temp = np.random.randint(0, X.shape[0]-1, X.shape[0])
+                self.ensemble_.append(clone(self.base_estimator).fit(X[self.temp], y[self.temp]))
         return self
     
     def predict(self, X):
@@ -91,6 +88,7 @@ class BaggingClassifier2(BaseEnsemble, ClassifierMixin):
                 prediction = np.apply_along_axis(lambda x: np.argmax(np.bincount(x)), axis=1, arr=scores)
 
                 return self.classes_[prediction]
+                
             #do akumulacji wsparc
             else:
                 for i, member_clf in enumerate(self.ensemble_):

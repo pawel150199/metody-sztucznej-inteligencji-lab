@@ -1,10 +1,3 @@
-main3.py
-W tym roku
-23 Mar
-
-Mateusz Polski przesłał(a) 1 element
-Tekst
-main3.py
 import numpy as np
 import strlearn as sl
 import matplotlib.pyplot as plt

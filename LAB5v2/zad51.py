@@ -35,10 +35,6 @@ for data_id, dataset in enumerate(datasets):
     dataset = np.genfromtxt("datasets/%s.csv" % (dataset), delimiter=",")
     X = dataset[:, :-1]
     y = dataset[:, -1].astype(int)
-    #tablica z wartościami z rozkładu normalnego
-    rand = np.random.normal(size=X.shape[1])
-    #mnozenie elementów 
-    X = X*rand
 
     for fold_id, (train, test) in enumerate(rskf.split(X,y)):
         for clf_id, clf_name in enumerate(clfs):

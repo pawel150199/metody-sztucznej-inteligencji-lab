@@ -31,10 +31,8 @@ class BaggingClassifier(BaseEnsemble, ClassifierMixin):
             self.X_ = []
             self.y_ = []
             for j in range(0, self.n_features):
-                self.temp = random.randint(0, X.shape[0]-1)
-                self.X_.append(X[self.temp])
-                self.y_.append(y[self.temp])
-            self.ensemble_.append(clone(self.base_estimator).fit(self.X_, self.y_))
+                self.temp = np.random.randint(0, X.shape[0]-1, X.shape[0])
+                self.ensemble_.append(clone(self.base_estimator).fit(X[self.temp], y[self.temp]))
         return self
     
     def predict(self, X):
@@ -53,12 +51,8 @@ class BaggingClassifier(BaseEnsemble, ClassifierMixin):
         pred_ = np.array(pred_)
         prediction = np.apply_along_axis(lambda x: np.argmax(np.bincount(x)), axis=1, arr=pred_.T)
         return self.classes_[prediction]
-    def ensemble_support_matrix(self, X):
-        """Macierz wsparć"""
-        probas_ = []
-        for i, member_clf in enumerate(self.ensemble_):
-            probas_.append(member_clf.predict_proba(X))
-        return np.array(probas_)
+        """prediction = mode(predictions, axis=0)[0].flatten()"""
+    
 
 
 
