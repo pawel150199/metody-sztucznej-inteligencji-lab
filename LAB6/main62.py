@@ -7,7 +7,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import RepeatedStratifiedKFold
 from zad62 import BaggingClassifier2
 
-datasets = [ 'balance', 'banana']
+datasets = ['banana']
 
 clfs = {
     'Bagging HV, W': BaggingClassifier2(base_estimator=DecisionTreeClassifier(random_state=1410), hard_voting=True, scales=True),

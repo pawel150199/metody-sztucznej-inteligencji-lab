@@ -2,7 +2,8 @@ import numpy as np
 from sklearn.ensemble import BaseEnsemble
 import random
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.base import ClassifierMixin, clone 
+from sklearn.base import ClassifierMixin, clone
+from scipy.stats import mode 
 from sklearn.utils.validation import check_array, check_is_fitted, check_X_y
 
 class BaggingClassifier(BaseEnsemble, ClassifierMixin):
@@ -28,11 +29,8 @@ class BaggingClassifier(BaseEnsemble, ClassifierMixin):
         self.ensemble_ = []
         #Bagging
         for i in range(self.n_estimators):
-            self.X_ = []
-            self.y_ = []
-            for j in range(0, self.n_features):
-                self.temp = np.random.randint(0, X.shape[0]-1, X.shape[0])
-                self.ensemble_.append(clone(self.base_estimator).fit(X[self.temp], y[self.temp]))
+            bootstrap = np.random.choice(X.shape[0],size=X.shape[0], replace=True)
+            self.ensemble_.append(clone(self.base_estimator).fit(X[bootstrap], y[bootstrap]))
         return self
     
     def predict(self, X):
@@ -49,10 +47,5 @@ class BaggingClassifier(BaseEnsemble, ClassifierMixin):
         for i, member_clf in enumerate(self.ensemble_):
             pred_.append(member_clf.predict(X))
         pred_ = np.array(pred_)
-        prediction = np.apply_along_axis(lambda x: np.argmax(np.bincount(x)), axis=1, arr=pred_.T)
+        prediction = mode(pred_, axis=0)[0].flatten()
         return self.classes_[prediction]
-        """prediction = mode(predictions, axis=0)[0].flatten()"""
-    
-
-
-
