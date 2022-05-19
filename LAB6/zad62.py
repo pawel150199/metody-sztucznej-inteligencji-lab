@@ -6,6 +6,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.base import ClassifierMixin, clone 
 from sklearn.utils.validation import check_array, check_is_fitted, check_X_y
 from scipy.stats import mode 
+from sklearn.datasets import make_classification
 from sklearn.model_selection import RepeatedStratifiedKFold
 
 class BaggingClassifier2(BaseEnsemble, ClassifierMixin):
@@ -58,7 +59,7 @@ class BaggingClassifier2(BaseEnsemble, ClassifierMixin):
                 
                 pred_ = np.array(pred_)
                 prediction = mode(pred_, axis=0)[0].flatten()
-                print(prediction)
+                prediction = np.around(prediction).astype(int)
                 return self.classes_[prediction]
                 
             
@@ -69,7 +70,6 @@ class BaggingClassifier2(BaseEnsemble, ClassifierMixin):
                 pred_ = np.array(pred_)
                 print(pred_)
                 prediction = mode(pred_, axis=0)[0].flatten()
-
                 return self.classes_[prediction]
         #akumulacja wsparć
         else:
@@ -99,7 +99,10 @@ if __name__ == '__main__':
     datasets = ['banana']
 
     clfs = {
-        'Bagging NHV W': BaggingClassifier2(base_estimator=DecisionTreeClassifier(random_state=1410), hard_voting=True, weight_mode=False, random_state=1234),
+        'Bagging NHV W': BaggingClassifier2(base_estimator=DecisionTreeClassifier(random_state=1410), hard_voting=False, weight_mode=True, random_state=1234),
+        'Bagging NHV NW': BaggingClassifier2(base_estimator=DecisionTreeClassifier(random_state=1410), hard_voting=False, weight_mode=False, random_state=1234),
+        'Bagging HV W': BaggingClassifier2(base_estimator=DecisionTreeClassifier(random_state=1410), hard_voting=True, weight_mode=True, random_state=1234),
+        'Bagging HV NW': BaggingClassifier2(base_estimator=DecisionTreeClassifier(random_state=1410), hard_voting=True, weight_mode=False, random_state=1234),
     }   
 
     n_repeat = 5
@@ -107,16 +110,18 @@ if __name__ == '__main__':
     scores = np.zeros((len(clfs), len(datasets), n_split*n_repeat))
     rskf = RepeatedStratifiedKFold(n_splits=n_split, n_repeats=n_repeat, random_state=1410)
 
-    for data_id, dataset in enumerate(datasets):
-        dataset = np.genfromtxt("datasets/%s.csv" % (dataset), delimiter=",")
-        X = dataset[:, :-1]
-        y = dataset[:, -1].astype(int)
-        for fold_id, (train, test) in enumerate(rskf.split(X,y)):
-            for clf_id, clf_name in enumerate(clfs):
-                clf = clfs[clf_name]
-                clf.fit(X[train], y[train])
-                y_pred = clf.predict(X[test])
-                scores[clf_id, data_id, fold_id] = accuracy_score(y[test], y_pred)
+    #for data_id, dataset in enumerate(datasets):
+        #dataset = np.genfromtxt("datasets/%s.csv" % (dataset), delimiter=",")
+        #X = dataset[:, :-1]
+        #y = dataset[:, -1].astype(int)
+    X, y = make_classification(
+            n_samples=100, n_classes=4, n_informative=4, random_state=100)
+    for fold_id, (train, test) in enumerate(rskf.split(X,y)):
+        for clf_id, clf_name in enumerate(clfs):
+            clf = clfs[clf_name]
+            clf.fit(X[train], y[train])
+            y_pred = clf.predict(X[test])
+            scores[clf_id, 0, fold_id] = accuracy_score(y[test], y_pred)
 
     mean = np.mean(scores, axis=2)
     std = np.std(scores, axis=2)
