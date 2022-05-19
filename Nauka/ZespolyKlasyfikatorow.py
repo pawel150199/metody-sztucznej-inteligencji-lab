@@ -37,7 +37,7 @@ class RandomSubspaceEnsemble(BaseEnsemble, ClassifierMixin):
         self.ensemble_ = []
         for i in range(self.n_estimators):
             self.ensemble_.append(clone(self.base_estimator).fit(X[:, self.subspaces[i]], y))
-
+        print(self.ensemble_)
         return self
     def predict(self, X):
         """Predykcja"""

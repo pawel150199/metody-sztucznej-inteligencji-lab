@@ -6,8 +6,8 @@ from sklearn.metrics import accuracy_score
 
 
 
-dataset = 'ionosphere'
-dataset = np.genfromtxt("datasets/%s.csv" % (dataset), delimiter=",")
+dataset = 'australian'
+dataset = np.genfromtxt("australian.csv", delimiter=",")
 X = dataset[:, :-1]
 y = dataset[:, -1].astype(int)
 
