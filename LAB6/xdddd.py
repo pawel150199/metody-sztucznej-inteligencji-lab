@@ -73,7 +73,7 @@ class myBagEns(BaseEnsemble, ClassifierMixin):
                     pred_.append(member_clf.predict(X))
                 
                 pred_ = np.array(pred_)
-                
+            
                 prediction = np.apply_along_axis(lambda x: np.argmax(np.bincount(x)), axis=1, arr=pred_.T)
                 
                 return self.classes_[prediction]

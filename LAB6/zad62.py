@@ -53,6 +53,17 @@ class BaggingClassifier2(BaseEnsemble, ClassifierMixin):
             pred_ = []
             
             if self.weight_mode == True:
+                #option number one:
+                """
+                for i, member_clf in enumerate(self.ensemble_):
+                    pred_.append(member_clf.predict(X))
+                    pred_[i] = pred_[i]*self.weights[i]
+                pred_ = np.array(pred_)
+                mean_pred_ = np.mean(pred_, axis=0)
+                prediction = np.around(mean_pred_).astype(int)
+                return self.classes_[prediction]
+                """
+                #option number two:
                 for i, member_clf in enumerate(self.ensemble_):
                     pred_.append(member_clf.predict(X))
                     pred_[i] = pred_[i]*self.weights[i]
@@ -61,14 +72,12 @@ class BaggingClassifier2(BaseEnsemble, ClassifierMixin):
                 prediction = mode(pred_, axis=0)[0].flatten()
                 prediction = np.around(prediction).astype(int)
                 return self.classes_[prediction]
-                
             
             else:
                 for i, member_clf in enumerate(self.ensemble_):
                     pred_.append(member_clf.predict(X))
 
                 pred_ = np.array(pred_)
-                print(pred_)
                 prediction = mode(pred_, axis=0)[0].flatten()
                 return self.classes_[prediction]
         #akumulacja wsparć

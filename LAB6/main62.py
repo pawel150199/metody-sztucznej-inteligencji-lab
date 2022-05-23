@@ -5,14 +5,16 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import RepeatedStratifiedKFold
 from zad62 import BaggingClassifier2
+from tabulate import tabulate
+from scipy.stats import ttest_rel, ttest_ind
 
-datasets = ['banana']
+datasets = ['banana', 'balance', 'appendicitis', 'iris', 'magic', 'sonar']
 
 clfs = {
-    #'Bagging HV, W': BaggingClassifier2(base_estimator=DecisionTreeClassifier(random_state=1410), hard_voting=True, weight=True),
-    'Bagging HV NW': BaggingClassifier2(base_estimator=DecisionTreeClassifier(random_state=1410), hard_voting=True, weight_mode=True, random_state=1234),
-    #'Bagging NHV W': BaggingClassifier2(base_estimator=DecisionTreeClassifier(random_state=1410), hard_voting=False, weight=True),
-    'Bagging NHV NW': BaggingClassifier2(base_estimator=DecisionTreeClassifier(random_state=1410), hard_voting=True, weight_mode=False, random_state=1234),
+    'Bagging HV, W': BaggingClassifier2(base_estimator=DecisionTreeClassifier(random_state=1410), hard_voting=True, weight_mode=True, random_state=1234),
+    'Bagging HV NW': BaggingClassifier2(base_estimator=DecisionTreeClassifier(random_state=1410), hard_voting=True, weight_mode=False, random_state=1234),
+    'Bagging NHV W': BaggingClassifier2(base_estimator=DecisionTreeClassifier(random_state=1410), hard_voting=False, weight_mode=True, random_state=1234),
+    'Bagging NHV NW': BaggingClassifier2(base_estimator=DecisionTreeClassifier(random_state=1410), hard_voting=False, weight_mode=False, random_state=1234),
 }   
 
 n_repeat = 5
@@ -33,5 +35,19 @@ for data_id, dataset in enumerate(datasets):
 
 mean = np.mean(scores, axis=2)
 std = np.std(scores, axis=2)
-for clf_id, clf_name in enumerate(clfs):
-    print("%s: %.3f (%.3f)" % (clf_name, mean[clf_id], std[clf_id]))
+#for clf_id, clf_name in enumerate(clfs):
+    #print("%s: %.3f (%.3f)" % (clf_name, mean[clf_id], std[clf_id]))
+
+headers = list(clfs.keys())
+headers.insert(0, "dataset\clf")
+n_column = np.reshape(np.array(datasets), (len(datasets),1))
+mean = np.mean(scores, axis=2).T
+std = np.std(scores, axis=2).T
+
+table = np.concatenate((n_column, mean), axis=1)
+table = tabulate(table, headers, floatfmt=".2f")
+print("Wartości Średnie:\n\n\n", table)
+
+table_2 = np.concatenate((n_column, std), axis=1)
+table_2 = tabulate(table_2, headers, floatfmt=".2f")
+print("\n\nOdchylenie standardowe:\n\n\n", table_2)
