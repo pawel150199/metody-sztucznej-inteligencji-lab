@@ -1,6 +1,8 @@
 from sklearn import datasets
 import numpy as np
-
+"""
+Generuje zbiory podane w poleceniu i zapisuje jako datasety.
+"""
 # 1
 X, y = datasets.make_classification(
     n_samples=500,
