@@ -1,6 +1,5 @@
 from zad63  import RandomSubspaceEnsemble
 import numpy as np
-from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import RepeatedStratifiedKFold
 from sklearn.metrics import accuracy_score
 from zad63 import RandomSubspaceEnsemble

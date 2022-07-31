@@ -1,15 +1,11 @@
-from statistics import mean
-from matplotlib.pyplot import axis
 import numpy as np
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
 from sklearn.model_selection import RepeatedStratifiedKFold
 from zad62 import BaggingClassifier2
 from tabulate import tabulate
-from scipy.stats import ttest_rel, ttest_ind
 from sklearn.base import clone
 from scipy.stats import wilcoxon
-from scipy.stats import rankdata, ranksums
+from scipy.stats import rankdata
 from strlearn.metrics import recall, precision, specificity, f1_score, geometric_mean_score_1, balanced_accuracy_score
 
 datasets = ['banana', 'balance',]

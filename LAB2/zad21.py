@@ -35,9 +35,10 @@ dataset = np.concatenate((X,y[:, np.newaxis]), axis=1)
 
 #zapis danych do pliku csv
 np.savetxt(
-    "zadanie11.csv",
+    "zad21.csv",
     dataset,
     delimiter=",",
     fmt = ['%.5f' for i in range(X.shape[1])] + ["%i"],
 )
-print(dataset)"""
+print(dataset)
+"""

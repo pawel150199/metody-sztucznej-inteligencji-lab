@@ -1,11 +1,8 @@
 from statistics import mean
-from matplotlib.pyplot import axis
 import numpy as np
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import RepeatedStratifiedKFold
-from tabulate import tabulate
-from scipy.stats import ttest_rel, ttest_ind
 from zad61 import BaggingClassifier
 
 datasets = ['banana']

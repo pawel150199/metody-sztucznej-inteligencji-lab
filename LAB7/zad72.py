@@ -1,5 +1,4 @@
-from sklearn import datasets, naive_bayes
-from sklearn.tree import DecisionTreeClassifier
+from sklearn import datasets
 from imblearn.over_sampling import RandomOverSampler, SMOTE
 from imblearn.under_sampling import RandomUnderSampler
 from strlearn.metrics import recall, precision, specificity, f1_score, geometric_mean_score_1, balanced_accuracy_score
@@ -7,11 +6,9 @@ from sklearn.model_selection import RepeatedStratifiedKFold
 from sklearn.base import clone
 import numpy as np
 from sklearn.naive_bayes import  GaussianNB
-from sklearn.metrics import accuracy_score
 from tabulate import tabulate
 from scipy.stats import ttest_ind
-from sklearn.base import ClassifierMixin, BaseEstimator
-from zad81 import SamplingClassifier
+from zad71 import SamplingClassifier
 
 clfs = {
     'none': SamplingClassifier(base_estimator=GaussianNB()),

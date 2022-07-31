@@ -1,5 +1,4 @@
 import numpy as np
-import random
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.datasets import make_classification
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted

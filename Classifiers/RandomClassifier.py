@@ -1,7 +1,6 @@
 from tabnanny import check
 from sklearn.base import BaseEstimator, ClassifierMixin
 import numpy as np
-import random
 from sklearn.datasets import make_classification
 from sklearn.neighbors import DistanceMetric
 from sklearn.utils import check_random_state

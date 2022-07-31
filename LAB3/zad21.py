@@ -1,13 +1,8 @@
 from tabnanny import check
 from sklearn.base import BaseEstimator, ClassifierMixin
 import numpy as np
-import random
 from sklearn.datasets import make_classification
-from sklearn.neighbors import DistanceMetric
-from sklearn.utils import check_random_state
 from sklearn.utils.validation import check_X_y, check_array, check_is_fitted
-from sklearn.ensemble import RandomForestClassifier
-from numpy.random import MT19937
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score

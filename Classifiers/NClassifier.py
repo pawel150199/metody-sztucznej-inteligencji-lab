@@ -10,7 +10,6 @@ from sklearn.utils.multiclass import unique_labels
 from sklearn.neighbors import KNeighborsClassifier
 from scipy.spatial.distance import cdist
 from scipy.stats import mode
-import statistics
 
 
 class NClassifier(BaseEstimator, ClassifierMixin):

@@ -2,10 +2,7 @@ from zad21 import RandomClassifier
 from zad22 import NClassifier
 import numpy as np
 from sklearn import datasets
-from sklearn.datasets import make_classification
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import RepeatedStratifiedKFold
 from prettytable import PrettyTable as table
 

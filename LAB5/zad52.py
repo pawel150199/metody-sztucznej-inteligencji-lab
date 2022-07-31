@@ -1,15 +1,12 @@
 from statistics import mean
 import numpy as np
-from sklearn import datasets
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import RepeatedStratifiedKFold
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
-from scipy.stats import ttest_rel, ttest_ind
+from scipy.stats import ttest_ind
 from tabulate import tabulate
-from sklearn.ensemble import AdaBoostClassifier
-from sklearn.svm import SVC
 
 clfs = {
     'GNB': GaussianNB(),

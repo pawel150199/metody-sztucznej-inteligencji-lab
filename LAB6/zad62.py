@@ -1,7 +1,6 @@
 import numpy as np
-from sklearn.ensemble import BaggingClassifier, BaseEnsemble
+from sklearn.ensemble import BaseEnsemble
 from sklearn.metrics import accuracy_score
-from sklearn.preprocessing import scale
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.base import ClassifierMixin, clone 
 from sklearn.utils.validation import check_array, check_is_fitted, check_X_y

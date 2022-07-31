@@ -2,15 +2,10 @@ import numpy as np
 from sklearn import datasets
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import RepeatedStratifiedKFold
-from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import BaggingClassifier, VotingClassifier
-from sklearn.datasets import make_classification
-import random
 from sklearn.base import ClassifierMixin, BaseEstimator
 from sklearn.base import clone
 from scipy.stats import mode
-from sklearn.utils.validation import check_array, check_is_fitted, check_X_y
 
 BASE_MODEL = DecisionTreeClassifier()
 ENSAMBLE_SIZE = 5
