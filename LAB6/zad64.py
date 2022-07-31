@@ -8,6 +8,8 @@ from zad62 import BaggingClassifier2
 from tabulate import tabulate
 from scipy.stats import ttest_rel, ttest_ind
 from sklearn.base import clone
+from scipy.stats import wilcoxon
+from scipy.stats import rankdata
 
 datasets = ['banana', 'balance', 'appendicitis', 'iris', 'magic', 'sonar']
 

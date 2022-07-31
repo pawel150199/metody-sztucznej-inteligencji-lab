@@ -1,5 +1,5 @@
-from zad21 import RandomClassifier
-from zad22 import NClassifier
+from RandomClassifier import RandomClassifier
+from NClassifier import NClassifier
 import numpy as np
 from sklearn import datasets
 from sklearn.datasets import make_classification

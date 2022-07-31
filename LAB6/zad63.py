@@ -32,7 +32,8 @@ class RandomSubspaceEnsemble(BaseEnsemble, ClassifierMixin):
             raise ValueError("Number of features in subspace higher than number of features.")
         #Wylosowanie podprzestrzeni cech
         self.subspaces = np.random.randint(0, self.n_features, (self.n_estimators, self.n_subspace_features))
-
+        print(self.subspaces.shape)
+        exit()
         #Wyuczenie nowych modeli i stworzenie zespołu
         self.ensemble_ = []
         for i in range(self.n_estimators):
